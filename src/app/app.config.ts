@@ -1,6 +1,8 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
+import { SsrCookieService } from 'ngx-cookie-service-ssr';
+
 import { routes } from './app.routes';
 import {
   provideClientHydration,
@@ -12,5 +14,8 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
+
+    //CookieService
+    SsrCookieService,
   ],
 };
