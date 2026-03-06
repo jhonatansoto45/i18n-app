@@ -7,6 +7,7 @@ import {
 import express from 'express';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { SERVER_LANG_TOKEN } from './app/services/language';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
@@ -50,11 +51,14 @@ app.use('/**', (req, res, next) => {
 });
 
 app.use((req, res, next) => {
+  const lang = 'Español';
+
   angularApp
     .handle(req, {
       providers: [
         { provide: 'REQUEST', useValue: req },
         { provide: 'RESPONSE', useValue: res },
+        { provide: SERVER_LANG_TOKEN, useValue: lang },
       ],
     })
     .then((response) =>
