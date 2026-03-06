@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { Language } from '../../services/language';
 
 @Component({
@@ -9,16 +9,16 @@ import { Language } from '../../services/language';
 export class LanguageSelector {
   private languageService = inject(Language);
 
-  languages = signal([
+  readonly languages = signal([
     { code: 'en', flag: '🇺🇸' },
     { code: 'es', flag: '🇪🇸' },
     { code: 'fr', flag: '🇫🇷' },
     { code: 'it', flag: '🇮🇹' },
   ]);
 
-  readonly currentLang = this.languageService.currentLang;
+  readonly currentLang = computed(() => this.languageService.currentLang());
 
-  changeLanguage(event: Event) {
+  changeLanguage(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     const lang = selectElement.value;
     this.languageService.changeLanguage(lang);
