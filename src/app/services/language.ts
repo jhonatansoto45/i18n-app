@@ -1,4 +1,5 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { SsrCookieService } from 'ngx-cookie-service-ssr';
 
 @Injectable({
@@ -6,10 +7,14 @@ import { SsrCookieService } from 'ngx-cookie-service-ssr';
 })
 export class Language {
   private cookieService = inject(SsrCookieService);
+  private translateService = inject(TranslateService);
+
+  currentLang = signal('');
 
   changeLanguage(lang: string): void {
-    console.log(lang);
+    this.currentLang.set(lang);
     this.cookieService.set('lang', lang);
+    this.translateService.use(lang);
 
     //TODO: Cambio de idioma
   }

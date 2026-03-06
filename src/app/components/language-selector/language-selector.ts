@@ -16,6 +16,8 @@ export class LanguageSelector {
     { code: 'it', flag: '🇮🇹' },
   ]);
 
+  readonly currentLang = this.languageService.currentLang;
+
   changeLanguage(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
     const lang = selectElement.value;

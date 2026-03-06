@@ -4,6 +4,7 @@
   class="flex"
   name="language"
   id="language"
+  [value]="currentLang()"
   (change)="changeLanguage($event)"
 >
   @for (language of languages(); track language.code) {
