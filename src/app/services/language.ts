@@ -13,7 +13,9 @@ export class Language {
   private cookieService = inject(SsrCookieService);
   private translateService = inject(TranslateService);
 
-  readonly currentLang = signal('');
+  readonly langServer = inject(SERVER_LANG_TOKEN, { optional: true });
+
+  readonly currentLang = signal(this.langServer ?? 'en');
 
   changeLanguage(lang: string): void {
     this.currentLang.set(lang);

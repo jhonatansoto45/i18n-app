@@ -20,13 +20,11 @@ export class AppComponent {
     @Inject(SERVER_LANG_TOKEN)
     langServer: string,
   ) {
-    console.log({ langServer });
-
-    console.log({ cookie: this.cookieService.get('lang') });
-
-    const lang = this.cookieService.check('lang')
-      ? this.cookieService.get('lang')
-      : 'en';
+    const lang =
+      langServer ??
+      (this.cookieService.check('lang')
+        ? this.cookieService.get('lang')
+        : 'en');
 
     this.languageService.changeLanguage(lang);
   }

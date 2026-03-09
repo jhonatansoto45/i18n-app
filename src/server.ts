@@ -51,14 +51,17 @@ app.use('/**', (req, res, next) => {
 });
 
 app.use((req, res, next) => {
-  const lang = 'Español';
+  const cookie = req?.headers?.cookie ?? '';
+  const langCookie =
+    cookie.split(';').find((c) => c.startsWith('lang=')) ?? 'lang=en';
+  const langValue = langCookie?.split('=')?.[1] ?? 'en';
 
   angularApp
     .handle(req, {
       providers: [
         { provide: 'REQUEST', useValue: req },
         { provide: 'RESPONSE', useValue: res },
-        { provide: SERVER_LANG_TOKEN, useValue: lang },
+        { provide: SERVER_LANG_TOKEN, useValue: langValue },
       ],
     })
     .then((response) =>
